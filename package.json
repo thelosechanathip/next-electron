@@ -1,20 +1,23 @@
 {
   "name": "test-electron",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "My Electron App",
   "private": true,
   "main": "electron/main.js",
   "author": "Your Name",
   "scripts": {
-    "dev": "concurrently \"npm run dev:next\" \"npm run dev:electron\"",
+    "dev": "npm run build:backend && concurrently \"npm run dev:next\" \"npm run dev:electron\"",
     "dev:next": "next dev --turbopack",
     "dev:electron": "wait-on http://localhost:3000 && cross-env NODE_ENV=development electron .",
+    "build:backend": "cd backend && go build -o ../bin/backend.exe",
     "build": "next build",
-    "dist": "next build && electron-builder"
+    "dist": "npm run build:backend && next build && electron-builder",
+    "dist:clean": "rm -rf dist out bin/backend.exe",
+    "dist:full": "npm run dist:clean && npm run dist",
+    "postdist": "echo 'Build completed! Installer: dist/Electron Setup 0.2.0.exe'"
   },
   "build": {
-    "appId": "com.example.testelectron",
-    "productName": "TestElectronApp",
+    "productName": "Electron",
     "directories": {
       "output": "dist"
     },
@@ -23,10 +26,15 @@
       "electron/**/*",
       "package.json"
     ],
+    "extraResources": [
+      {
+        "from": "bin",
+        "to": "bin",
+        "filter": ["**/*"]
+      }
+    ],
     "win": {
-      "target": [
-        "nsis"
-      ],
+      "target": "nsis",
       "icon": "electron/icon.ico"
     },
     "nsis": {

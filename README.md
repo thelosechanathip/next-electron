@@ -109,8 +109,19 @@ Update file package.json
 ```
 
 Run คำสั่งด้านล่างด้วย Administrator
-```
+```bash
 npm run dist
 ```
 
 จะได้ File ติดตั้งอยู่ใน Folder dist/{ชื่อ File}.exe
+
+## build GoLang
+```bash
+# ตั้งค่าให้ build สำหรับ Windows (สำคัญมากถ้าทำบน Mac/Linux)
+# แต่ถ้าทำบน Windows อยู่แล้ว ข้ามบรรทัด set ได้
+set GOOS=windows
+set GOARCH=amd64
+
+# สั่ง Build (ใส่ flag -H=windowsgui เพื่อซ่อนหน้าต่างดำๆ ตอน Production)
+go build -ldflags -H=windowsgui -o bin/backend.exe backend/main.go
+```

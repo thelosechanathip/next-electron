@@ -21,6 +21,7 @@
 /build
 /dict
 /out
+/bin
 
 # misc
 .DS_Store
