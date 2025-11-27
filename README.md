@@ -77,6 +77,7 @@ export default nextConfig;
 Install Dependencies
 ```bash
 npm install --save-dev electron-builder
+npm install electron-store@8.1.0
 ```
 
 Update file package.json
